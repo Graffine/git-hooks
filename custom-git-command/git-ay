@@ -1,0 +1,11 @@
+#!/bin/bash
+function cleanup() {
+    echo "Clean up docker container..."
+    docker container prune --force
+    exit 0
+}
+
+GIT_ROOT_DIR=$(git rev-parse --show-toplevel)
+docker run -it -w /var/www -v $GIT_ROOT_DIR:/var/www -v $HOME/.gitconfig:/root/.gitconfig gcr.io/php-tester sh -c "git cz"
+
+cleanup
